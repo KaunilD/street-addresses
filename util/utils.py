@@ -9,8 +9,11 @@ import math
 import json
 from rtree import index
 
-def haversine((lat1, lon1), (lat2, lon2)):
+def haversine(latlon1: list, latlon2: list) -> float:
     """ great circle distance between lat lon points """
+    lat1, lon1 = latlon1
+    lat2, lon2 = latlon2
+    
     lon1, lat1, lon2, lat2 = map(math.radians, [lon1, lat1, lon2, lat2])
 
     # haversine formula
@@ -23,21 +26,31 @@ def haversine((lat1, lon1), (lat2, lon2)):
     return c * r
 
 
-def on_segment((lat1, lon1), (lat2, lon2), (a, b)):
+def on_segment(latlon1: list, latlon2: list, point: list) -> bool:
     """ determines if point (a, b) on greatcircle is inside line segement formed
         by lat lons
     """
+    lat1, lon1 = latlon1
+    lat2, lon2 = latlon2
+    
+    a, b = point
+
     if lat1 < lat2:
         return lat1 < a < lat2
     else:
         return lat2 < a < lat1
 
 
-def get_closest_point((lat1, lon1), (lat2, lon2), (a, b)):
+def get_closest_point(latlon1: list, latlon2: list, point: list) -> tuple:
     """ This is an approximation in spherical coordinates which holds at the
         distances we are concerned with. Determines point on line segment formed
         by lat lons closest to point (a, b).
     """
+    lat1, lon1 = latlon1
+    lat2, lon2 = latlon2
+    
+    a, b = point
+
     if lat1==lat2:
         x, y = lat1, b
     elif lon1==lon2:
@@ -58,7 +71,7 @@ def get_closest_point((lat1, lon1), (lat2, lon2), (a, b)):
             return (lat2, lon2)
 
 
-def get_bounding_box(lat, lon):
+def get_bounding_box(lat: float, lon: float) -> list:
     assert lat >= -90.0 and lat  <= 90.0
     assert lon >= -180.0 and lon <= 180.0
 
@@ -98,11 +111,14 @@ def convert(minlat, minlon, maxlat, maxlon, row, col):
     convert.y_to_lon = y_to_lon
 
 
-def point_dist_from_start((lat1, lon1), (lat2, lon2), dist, orth_dist, odd):
+def point_dist_from_start(latlon1: list, latlon2: list, dist: float, orth_dist: float, odd: bool) -> list:
     """ finds the point along road segment which is dist meters from start.
         returns point which is orthogonal to the road segment orth_dist from
         above point
     """
+    lat1, lon1 = latlon1
+    lat2, lon2 = latlon2
+    
     if lat1 == lat2 and lon1 == lon2:
         return lat1, lon1
     vec1 = [lat2- lat1, lon2 - lon1]
