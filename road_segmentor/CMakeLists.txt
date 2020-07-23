@@ -1,24 +1,15 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 3.5)
 
-PROJECT(RoadConnectionLabelling)
-
-FIND_PACKAGE( OpenCV REQUIRED )
-
-# Requires OpenCV v2.4.1 or later
-IF (${OpenCV_VERSION} VERSION_LESS 2.4.1)
-    MESSAGE(FATAL_ERROR "OpenCV version is not compatible : ${OpenCV_VERSION}. Requires atleast OpenCV v2.4.1")
-ENDIF()
-
-
-SET (SRC
-    ${CMAKE_BINARY_DIR}/src/main.cpp
-    ${CMAKE_BINARY_DIR}/src/segmentation_methods.cpp
-    ${CMAKE_BINARY_DIR}/src/thinning_methods.cpp
-    ${CMAKE_BINARY_DIR}/src/flood_fill_methods.cpp
-    ${CMAKE_BINARY_DIR}/src/json.hpp
-    ${CMAKE_BINARY_DIR}/src/road_segmentation.h
+project ("RoadSegmentator" 
+	VERSION 2.1 
+	DESCRIPTION "Segments line geometries in an OSM" 
+	LANGUAGES CXX
 )
-SET (CMAKE_CXX_FLAGS "-std=c++11")
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-ADD_EXECUTABLE( ${PROJECT_NAME} ${SRC} )
-TARGET_LINK_LIBRARIES( ${PROJECT_NAME}  ${OpenCV_LIBS} )
+
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    set(CMAKE_CXX_EXTENSIONS OFF)
+    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+endif()
+
+# build the following
+add_subdirectory("src")
