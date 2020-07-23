@@ -49,7 +49,7 @@ Mat guoHallThinning(Mat im)
 
     //Convert to grayscale
     if (im.channels() > 1)
-        cvtColor(im, im, CV_BGR2GRAY);
+        cvtColor(im, im, COLOR_BGR2GRAY);
 
     im /= 255;
 
@@ -131,7 +131,7 @@ Mat zhangSuenThinning(Mat im)
 
     //Convert to grayscale
     if (im.channels() > 1)
-        cvtColor(im, im, CV_BGR2GRAY);
+        cvtColor(im, im, COLOR_BGR2GRAY);
 
     im /= 255;
 

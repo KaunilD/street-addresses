@@ -23,8 +23,8 @@ int main(int argc, const char * argv[])
         cout << "Image size is either too big, or the image was not found. Terminating..." << endl;
         return 0;
     }
-    resize(image, image, Size(), 0.5, 0.5, CV_INTER_AREA);
-    threshold(image, image, 30, 255, CV_THRESH_BINARY);
+    resize(image, image, Size(), 0.5, 0.5, INTER_AREA);
+    threshold(image, image, 30, 255, THRESH_BINARY);
     //imwrite(projectPath + "/1.ThreshTileImage.png", image);
 
     //Fill empty spaces in the binary image.

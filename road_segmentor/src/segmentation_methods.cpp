@@ -182,7 +182,7 @@ vector<Point> findImageCorners(Mat thinImage)
 
     //find best corners from the junctions across which to draw circles
     blur(junctionImage, junctionImage, Size(7,7));
-    threshold(junctionImage, junctionImage, 1, 255, CV_THRESH_BINARY);
+    threshold(junctionImage, junctionImage, 1, 255, THRESH_BINARY);
 
     struct circleProps
     {
@@ -362,7 +362,7 @@ Mat removeSpikes(Mat thinImage, int length)
 
     cout << "Removing small lines." << endl;
     //Iterate through the image and find line endings. Classified by having just one neighbour.
-    if (thinImage.channels() > 1) cvtColor(thinImage, thinImage, CV_BGR2GRAY);
+    if (thinImage.channels() > 1) cvtColor(thinImage, thinImage, COLOR_BGR2GRAY);
 
     for (int i = 0; i < thinImage.rows; i++)
     {
